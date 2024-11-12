@@ -40,7 +40,8 @@ class TestDeathNote {
         try{
             deathNote.getRule(0);
         }catch(IllegalArgumentException e){
-            final String msg =e.getCause().getMessage();
+            assertNotNull(e);
+            final String msg =e.getMessage();
             assertNotNull(msg);
             assertNotEquals(msg, "");
         }
@@ -48,7 +49,7 @@ class TestDeathNote {
         try{
             deathNote.getRule(-100);
         }catch(IllegalArgumentException e){
-            final String msg =e.getCause().getMessage();
+            final String msg =e.getMessage();
             assertNotNull(msg);
             assertNotEquals(msg, "");
         }
