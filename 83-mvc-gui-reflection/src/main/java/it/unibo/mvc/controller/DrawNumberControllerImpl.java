@@ -3,6 +3,7 @@ package it.unibo.mvc.controller;
 import it.unibo.mvc.api.DrawNumber;
 import it.unibo.mvc.api.DrawNumberController;
 import it.unibo.mvc.api.DrawNumberView;
+import it.unibo.mvc.api.DrawResult;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,13 +44,16 @@ public final class DrawNumberControllerImpl implements DrawNumberController {
 
     @Override
     public void newAttempt(final int n) {
+        DrawResult res = model.attempt(n);
         Objects.requireNonNull(view, "There is no view attached!").forEach(new Consumer<DrawNumberView>() {
             @Override
             public void accept(DrawNumberView t) {
-                t.result(model.attempt(n));
+                t.result(res);
             }
-            
-        });;
+        });
+        if(res == DrawResult.YOU_LOST || res == DrawResult.YOU_WON){
+            resetGame();
+        }
     }
 
     @Override
